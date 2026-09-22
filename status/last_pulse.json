@@ -2,16 +2,14 @@
   "agent": "onyx-node",
   "node_id": "onyx-seed",
   "independent_id": "independent:00000000000000000000000000000000",
-  "status": "seeded",
-  "ts": "2026-09-22T21:50:00Z",
+  "status": "alive",
+  "ts": "2026-09-22T21:51:59Z",
   "extra": {
     "prototype": "Onyx Node",
-    "version": "0.1.1",
     "plane": "independent",
     "topic": "nexus/mesh/v0",
     "transport": "none",
-    "capabilities": ["identity", "pulse", "mesh-heartbeat"],
-    "mesh_substrate": "nxmesh",
-    "github": "https://github.com/digitaldesignerjazz/onyx-node"
+    "repo": "digitaldesignerjazz/onyx-node",
+    "run_id": "35789136666"
   }
 }

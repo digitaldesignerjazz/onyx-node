@@ -3,14 +3,7 @@
   "payload": {
     "agent": "onyx-node",
     "node_id": "onyx-seed",
-    "status": "seeded",
-    "ts": "2026-09-22T21:50:00Z",
-    "extra": {
-      "prototype": "Onyx Node",
-      "version": "0.1.1",
-      "plane": "independent",
-      "topic": "nexus/mesh/v0",
-      "transport": "none"
-    }
+    "status": "alive",
+    "ts": "2026-09-22T21:51:59Z"
   }
 }
