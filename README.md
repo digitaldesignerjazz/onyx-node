@@ -3,10 +3,11 @@
 **Durable independent-mesh edge node · Nexus lineage**
 
 [![ci](https://github.com/digitaldesignerjazz/onyx-node/actions/workflows/ci.yml/badge.svg)](https://github.com/digitaldesignerjazz/onyx-node/actions/workflows/ci.yml)
+[![pulse](https://github.com/digitaldesignerjazz/onyx-node/actions/workflows/pulse.yml/badge.svg)](https://github.com/digitaldesignerjazz/onyx-node/actions/workflows/pulse.yml)
 
 Onyx is a **stone node**: local identity first, optional transport second.
 It belongs to the independent mesh plane (`NEXUS_MESH=independent`).
-A live overlay fingerprint (Tailscale or NetBird) may be recorded later.
+A live overlay fingerprint (Tailscale or NetBird) may be recorded locally.
 Identity never waits on a vendor control plane.
 
 > Status: **seeded** · September 2026  
@@ -21,9 +22,9 @@ Identity never waits on a vendor control plane.
 | Piece | Role |
 |-------|------|
 | Identity | Local `independent:<hex>` node id, generated on first start |
-| Pulse | Periodic presence file under `status/last_pulse.json` |
-| Heartbeat | JSON envelope compatible with `nxmesh` topic `nexus/mesh/v0` |
-| Transport | Optional. Tailscale preferred when present. NetBird secondary. Never identity. |
+| Pulse | `status/last_pulse.json` |
+| Heartbeat | Tagged nxmesh envelope on topic `nexus/mesh/v0` |
+| Transport | Optional. Tailscale preferred when present. Recorded only in `state/` |
 | Wizard Q | Dry-run only until a public spec says otherwise |
 
 ## What this node is not
@@ -39,38 +40,28 @@ See [docs/PUBLIC_BOUNDARY.md](docs/PUBLIC_BOUNDARY.md).
 ## Quick start
 
 ```bash
-# generate local identity + emit one pulse
 cargo run --bin onyx-node -- init --node-id onyx-hannover-01
-
-# run the pulse loop
-cargo run --bin onyx-node -- pulse --interval 30
-
-# print current identity and last pulse
+cargo run --bin onyx-node -- pulse --interval 30 --transport none
 cargo run --bin onyx-node -- status
 ```
 
-First start writes:
+Optional public overlay hint (never an auth key):
 
-- `state/identity.json` — public node id and created-at (no private key material in this seed)
-- `status/last_pulse.json` — last heartbeat envelope
+```bash
+cargo run --bin onyx-node -- init --node-id onyx-hannover-01 \
+  --transport tailscale --fingerprint onyx-hannover-01.ts.net
+```
+
+First start writes gitignored files:
+
+- `state/identity.json`
+- `state/runtime.json`
+- `status/last_pulse.json`
+- `status/last_mesh_envelope.json`
 
 Copy `config/onyx.example.toml` to `config/onyx.toml` for local overrides.
-Do not commit `config/onyx.toml`, `state/` secrets or overlay tokens.
 
----
-
-## Architecture
-
-```
-Onyx Node
-   │
-   ├─ identity  ───── independent:<hex>
-   ├─ pulse     ───── status/last_pulse.json
-   ├─ heartbeat ──── topic: nexus/mesh/v0
-   └─ transport ──── optional Tailscale / NetBird fingerprint
-```
-
-Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+Hannover operator notes live in the **private** sister repo `onyx-hannover`.
 
 ---
 

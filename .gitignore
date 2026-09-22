@@ -16,6 +16,7 @@ secrets/
 *authkey*
 *wallet*
 *mnemonic*
+runtime_state.md
 
 # OS / editor
 .DS_Store

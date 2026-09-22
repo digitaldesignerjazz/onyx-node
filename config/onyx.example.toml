@@ -4,7 +4,6 @@
 [node]
 id = "onyx-hannover-01"
 plane = "independent"
-# independent_id is generated on first init. Do not invent one here.
 
 [pulse]
 interval_secs = 30
@@ -13,10 +12,11 @@ state_dir = "state"
 
 [mesh]
 topic = "nexus/mesh/v0"
-# transport = "none" | "tailscale" | "netbird"
+# transport = "none" | "tailscale" | "netbird" | "yggdrasil"
 transport = "none"
+# fingerprint is a public hint only. never an auth key.
+# fingerprint = "onyx-hannover-01.ts.net"
 
 [wizard_q]
-# Proposed. Dry-run only.
 enabled = false
 mode = "dry-run"

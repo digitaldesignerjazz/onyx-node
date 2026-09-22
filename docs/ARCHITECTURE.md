@@ -1,6 +1,6 @@
 # Onyx Node architecture (public)
 
-Status: **Proposed** · seeded 2026-09-22
+Status: **Proposed** · seeded 2026-09-22 · pulse envelope aligned 2026-09-22
 
 ## Purpose
 
@@ -8,8 +8,8 @@ Onyx is the durable edge node of the Nexus independent mesh plane.
 It answers three questions locally, without a vendor control plane:
 
 1. Who am I? — `independent:<hex>`
-2. Am I alive? — pulse file + heartbeat envelope
-3. How do I speak, if a transport exists? — optional overlay fingerprint
+2. Am I alive? — pulse file + nxmesh heartbeat envelope
+3. How do I speak, if a transport exists? — optional overlay fingerprint in local runtime state
 
 ## Layers
 
@@ -20,7 +20,7 @@ It answers three questions locally, without a vendor control plane:
 |  onyx-node CLI                                        |
 |    init | pulse | status                              |
 +-------------------------------------------------------+
-|  identity  |  pulse  |  heartbeat envelope            |
+|  identity  |  pulse  |  publish hook                  |
 +-------------------------------------------------------+
 |  independent mesh plane                               |
 |  (identity + pulse live even if overlay is down)      |
@@ -40,34 +40,19 @@ It answers three questions locally, without a vendor control plane:
 
 ## Pulse and heartbeat
 
-Pulse is a local file. Heartbeat is the same payload shaped for `nxmesh`:
-
-```json
-{
-  "type": "AgentHeartbeat",
-  "agent": "onyx-node",
-  "node_id": "onyx-hannover-01",
-  "independent_id": "independent:00..ff",
-  "status": "alive",
-  "topic": "nexus/mesh/v0",
-  "ts": "2026-09-22T21:00:00+00:00"
-}
-```
-
-Compatible in spirit with `york-autotype` heartbeats. Live mesh publish
-waits until `nxmesh` is linked as a path or git dependency.
+See [MESH_HEARTBEAT.md](MESH_HEARTBEAT.md). Local pulse plus tagged envelope
+`{ "type": "AgentHeartbeat", "payload": { … } }` on topic `nexus/mesh/v0`.
 
 ## Transport policy
 
-Record which fingerprint is live in local runtime state, never in this
-public tree:
+Record which fingerprint is live in `state/runtime.json` only:
 
 - none — identity still valid
 - tailscale — preferred dataplane when the binary exists
 - netbird — secondary
 - yggdrasil — companion only
 
-Never log auth keys.
+Never log auth keys. The CLI refuses `tskey-` / `nbkey-` shaped flags.
 
 ## Wizard Q
 
@@ -77,7 +62,7 @@ or submit runes in v0.1. Spec remains Proposed.
 ## Start order (operator)
 
 1. Resolve path root.
-2. `onyx-node init`
-3. `onyx-node pulse`
-4. Attach transport only if present.
+2. `onyx-node init --node-id onyx-hannover-01`
+3. Optional: `--transport tailscale --fingerprint <public-hint>`
+4. `onyx-node pulse`
 5. Prototypes after pulse is green.

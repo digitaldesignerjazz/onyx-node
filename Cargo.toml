@@ -1,11 +1,15 @@
 [package]
 name = "onyx-node"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Sven Normen Esslinger <Esslinger & Co.>"]
 description = "Onyx Node — durable independent-mesh edge node for the Nexus lineage"
 license = "Apache-2.0"
 repository = "https://github.com/digitaldesignerjazz/onyx-node"
+
+[features]
+default = []
+nxmesh = []
 
 [dependencies]
 tokio = { version = "1.40", features = ["full"] }
@@ -18,6 +22,10 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 clap = { version = "4.5", features = ["derive"] }
 hex = "0.4"
 rand = "0.8"
+
+# Live gossip when the crate path exists:
+# nxmesh = { git = "https://github.com/digitaldesignerjazz/nexus", branch = "main" }
+# nxmesh = { path = "../nexus/mesh/noise-quic" }
 
 [lib]
 name = "onyx_node"

@@ -1,9 +1,17 @@
 {
-  "type": "AgentHeartbeat",
   "agent": "onyx-node",
   "node_id": "onyx-seed",
   "independent_id": "independent:00000000000000000000000000000000",
   "status": "seeded",
-  "topic": "nexus/mesh/v0",
-  "ts": "2026-09-22T21:42:00+00:00"
+  "ts": "2026-09-22T21:50:00Z",
+  "extra": {
+    "prototype": "Onyx Node",
+    "version": "0.1.1",
+    "plane": "independent",
+    "topic": "nexus/mesh/v0",
+    "transport": "none",
+    "capabilities": ["identity", "pulse", "mesh-heartbeat"],
+    "mesh_substrate": "nxmesh",
+    "github": "https://github.com/digitaldesignerjazz/onyx-node"
+  }
 }
