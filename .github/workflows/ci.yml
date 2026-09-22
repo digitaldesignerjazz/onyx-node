@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: test
+        run: cargo test --offline || cargo test
+      - name: check boundary files
+        run: |
+          test -f README.md
+          test -f LICENSE
+          test -f docs/PUBLIC_BOUNDARY.md
+          test -f docs/ARCHITECTURE.md
+          test -f config/onyx.example.toml

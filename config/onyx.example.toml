@@ -1,0 +1,22 @@
+# Onyx Node example config — safe to publish.
+# Copy to config/onyx.toml for local use. That file is gitignored.
+
+[node]
+id = "onyx-hannover-01"
+plane = "independent"
+# independent_id is generated on first init. Do not invent one here.
+
+[pulse]
+interval_secs = 30
+status_dir = "status"
+state_dir = "state"
+
+[mesh]
+topic = "nexus/mesh/v0"
+# transport = "none" | "tailscale" | "netbird"
+transport = "none"
+
+[wizard_q]
+# Proposed. Dry-run only.
+enabled = false
+mode = "dry-run"

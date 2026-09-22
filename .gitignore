@@ -1,0 +1,23 @@
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# local operator state — never publish
+state/
+config/onyx.toml
+*.env
+*.pem
+*.key
+*.p12
+secrets/
+
+# overlay and wallet material
+*setupkey*
+*authkey*
+*wallet*
+*mnemonic*
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
