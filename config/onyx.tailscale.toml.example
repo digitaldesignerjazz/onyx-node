@@ -1,0 +1,26 @@
+# Onyx Node config with Tailscale as the recorded transport.
+# Copy to config/onyx.toml for local use. That file is gitignored.
+# Companion guide: docs/TAILSCALE_SETUP.md
+#
+# Do not put tskey- / auth keys in this file.
+# Join the tailnet with `tailscale up` on the host.
+
+[node]
+id = "onyx-hannover-01"
+plane = "independent"
+
+[pulse]
+interval_secs = 30
+status_dir = "status"
+state_dir = "state"
+
+[mesh]
+topic = "nexus/mesh/v0"
+# transport = "none" | "tailscale" | "netbird" | "yggdrasil" | "wireguard"
+transport = "tailscale"
+# fingerprint is a public hint only. never an auth key.
+fingerprint = "onyx-hannover-01.ts.net"
+
+[wizard_q]
+enabled = false
+mode = "dry-run"

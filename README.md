@@ -46,7 +46,7 @@ cargo run --bin onyx-node -- pulse --interval 30 --transport none
 cargo run --bin onyx-node -- status
 ```
 
-Optional public overlay hint (never an auth key):
+Preferred overlay — Tailscale. Fingerprint is a public MagicDNS hint, never an auth key:
 
 ```bash
 cargo run --bin onyx-node -- init --node-id onyx-hannover-01 \
@@ -71,6 +71,7 @@ Copy `config/onyx.example.toml` to `config/onyx.toml` for local overrides.
 
 Overlay guides (no secrets):
 
+- [Tailscale](docs/TAILSCALE_SETUP.md) — preferred dataplane
 - [Yggdrasil](docs/YGGDRASIL_SETUP.md) — public mesh peer
 - [WireGuard](docs/WIREGUARD_SETUP.md) — private tunnel alternative
 

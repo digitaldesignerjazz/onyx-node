@@ -49,13 +49,14 @@ See [MESH_HEARTBEAT.md](MESH_HEARTBEAT.md). Local pulse plus tagged envelope
 Record which fingerprint is live in `state/runtime.json` only:
 
 - none — identity still valid
-- tailscale — preferred dataplane when the binary exists
+- tailscale — preferred dataplane when the binary exists; see [TAILSCALE_SETUP.md](TAILSCALE_SETUP.md)
 - netbird — secondary
 - yggdrasil — public mesh companion; see [YGGDRASIL_SETUP.md](YGGDRASIL_SETUP.md)
 - wireguard — private tunnel alternative; see [WIREGUARD_SETUP.md](WIREGUARD_SETUP.md)
 
 Never log auth keys. The CLI refuses `tskey-` / `nbkey-` shaped flags.
 WireGuard `PrivateKey` values stay on the host under `/etc/wireguard/`.
+Tailscale auth keys stay in the admin console or a one-shot shell variable.
 
 ## Wizard Q
 
