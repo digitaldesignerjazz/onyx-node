@@ -13,10 +13,19 @@ PIDFILE=status/onyx-listen.pid
 LOG=status/watchdog.log
 ts() { date '+%Y-%m-%dT%H:%M:%S%z'; }
 
-is_main_listener() {  # $1 = pid
-  local cmd
-  cmd=$(tr '\0' ' ' < "/proc/$1/cmdline" 2>/dev/null) || return 1
-  [[ "$cmd" == *onyx-node*listen* && "$cmd" != *--test-peer* ]]
+is_main_listener() {  # $1 = pid; matches argv exactly, not substrings of shells
+  local -a argv
+  mapfile -d '' -t argv < "/proc/$1/cmdline" 2>/dev/null || return 1
+  (( ${#argv[@]} > 1 )) || return 1
+  local exe=${argv[0]##*/} a has_listen=0
+  for a in "${argv[@]:1}"; do
+    [[ $a == --test-peer ]] && return 1
+    [[ $a == listen ]] && has_listen=1
+  done
+  (( has_listen )) || return 1
+  [[ $exe == onyx-node ]] && return 0
+  [[ $exe == cargo && " ${argv[*]} " == *" run "*" onyx-node "* ]] && return 0
+  return 1
 }
 
 # 1) recorded PID alive and really the listener?
@@ -28,9 +37,9 @@ if [[ -s $PIDFILE ]]; then
 fi
 
 # 2) listener running under another PID (e.g. started by hand)? adopt it.
-for p in $(pgrep -f 'onyx-node.*listen' || true); do
+for p in $(pgrep -f 'onyx-node' || true); do
+  [[ $p == $$ ]] && continue
   if is_main_listener "$p"; then
-    # prefer the cargo parent if present
     echo "$p" > "$PIDFILE"
     echo "$(ts) adopted running listener pid=$p (pidfile was stale)" >> "$LOG"
     exit 0
