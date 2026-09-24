@@ -1,0 +1,36 @@
+# Safe Yggdrasil 0.5 knobs for Onyx (Debian + Docker).
+# No PrivateKey. No extra public peers.
+# Merge with apply-optimize.py on the host.
+#
+# Why these values:
+# - AdminListen pinned so yggdrasilctl stops falling back
+# - Multicast only on eth* — Docker veth/gwbridge were opening TLS listeners
+# - IfName ygg0 so the TUN is stable and not confused with tun0 leftovers
+# - IfMTU 65535 is the official Linux default (stream peering, not Ethernet MTU)
+# - NodeInfoPrivacy true — do not publish OS/arch/version into the mesh
+# - Listen empty — outbound-only, no public inbound listener
+
+AdminListen: unix:///var/run/yggdrasil/yggdrasil.sock
+
+Listen: []
+
+IfName: ygg0
+IfMTU: 65535
+
+NodeInfoPrivacy: true
+NodeInfo: {}
+
+MulticastInterfaces: [
+  {
+    Regex: "eth.*"
+    Beacon: true
+    Listen: true
+    Port: 0
+    Priority: 0
+  }
+  {
+    Regex: ".*"
+    Beacon: false
+    Listen: false
+  }
+]
