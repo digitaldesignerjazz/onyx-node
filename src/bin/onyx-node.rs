@@ -18,7 +18,7 @@ use tracing::{info, Level};
 use tracing_subscriber::EnvFilter;
 
 #[derive(Parser, Debug)]
-#[command(name = "onyx-node", about = "Onyx Node — independent-mesh edge pulse")]
+#[command(name = "onyx-node", version, about = "Onyx Node — independent-mesh edge pulse")]
 struct Args {
     #[command(subcommand)]
     cmd: Command,

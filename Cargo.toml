@@ -40,6 +40,7 @@ copyright = "2026, Sven Normen Esslinger / Esslinger & Co."
 license-file = ["LICENSE", "0"]
 section = "net"
 priority = "optional"
+depends = "libc6 (>= 2.34), libgcc-s1"
 extended-description = """\
 Onyx Node: durable independent-mesh edge node for the Nexus lineage.
 Alpha: 'onyx-node listen' joins the nxmesh gossipsub topic nexus/mesh/v0,

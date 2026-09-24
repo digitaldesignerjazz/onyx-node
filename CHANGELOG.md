@@ -17,7 +17,7 @@ Alpha. Not yet verified against a real remote mesh peer.
   `scripts/start-probe.sh` (local loopback test peer).
 - Yggdrasil IPv6 bind support through `state/listen.args`. The Hannover node listens on
   `/ip6/200:47dd:ce9e:2bc8:9a79:9a43:fa20:7079/tcp/4710`. See docs/LISTEN.md.
-- Debian package metadata (cargo-deb).
+- Debian package metadata (cargo-deb). Needs glibc >= 2.34 (Debian 12+, Ubuntu 22.04+).
 
 ### Notes
 - Needs rustc >= 1.88 (current libp2p dependencies).
