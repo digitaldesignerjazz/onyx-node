@@ -62,9 +62,14 @@ def main() -> None:
         raise SystemExit("refusing to write a config without PrivateKey")
 
     updated = original
-    updated = set_scalar(updated, "AdminListen", "unix:///var/run/yggdrasil/yggdrasil.sock")
+    # HJSON treats // as a comment. unix:// MUST be quoted.
+    updated = set_scalar(
+        updated,
+        "AdminListen",
+        '"unix:///var/run/yggdrasil/yggdrasil.sock"',
+    )
     updated = replace_block(updated, "Listen", "Listen: []")
-    updated = set_scalar(updated, "IfName", "ygg0")
+    updated = set_scalar(updated, "IfName", '"ygg0"')
     updated = set_scalar(updated, "IfMTU", "65535")
     updated = set_scalar(updated, "NodeInfoPrivacy", "true")
     updated = replace_object(updated, "NodeInfo", "NodeInfo: {}")
