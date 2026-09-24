@@ -13,6 +13,7 @@ pub enum Transport {
     Tailscale,
     Netbird,
     Yggdrasil,
+    Wireguard,
 }
 
 impl Transport {
@@ -21,6 +22,7 @@ impl Transport {
             "tailscale" => Self::Tailscale,
             "netbird" => Self::Netbird,
             "yggdrasil" => Self::Yggdrasil,
+            "wireguard" | "wg" => Self::Wireguard,
             _ => Self::None,
         }
     }
@@ -31,6 +33,7 @@ impl Transport {
             Self::Tailscale => "tailscale",
             Self::Netbird => "netbird",
             Self::Yggdrasil => "yggdrasil",
+            Self::Wireguard => "wireguard",
         }
     }
 }
@@ -105,5 +108,12 @@ mod tests {
     fn rejects_tailscale_auth_shape() {
         assert!(looks_like_secret("tskey-auth-EXAMPLEONLY"));
         assert!(!looks_like_secret("100.x.y.z"));
+    }
+
+    #[test]
+    fn parses_wireguard_alias() {
+        assert_eq!(Transport::parse("wireguard"), Transport::Wireguard);
+        assert_eq!(Transport::parse("WG"), Transport::Wireguard);
+        assert_eq!(Transport::Wireguard.as_str(), "wireguard");
     }
 }

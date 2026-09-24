@@ -1,0 +1,19 @@
+# WireGuard peer template for an Onyx ↔ Nexus link.
+# Copy to /etc/wireguard/wg-nexus.conf on the host and fill placeholders.
+# NEVER commit a filled copy. PrivateKey must not enter git.
+#
+#   sudo install -m 600 config/wireguard/wg-nexus.conf.example \
+#     /etc/wireguard/wg-nexus.conf
+#   sudo editor /etc/wireguard/wg-nexus.conf
+#   sudo wg-quick up wg-nexus
+
+[Interface]
+Address = <ONYX_WG_ADDR>/32
+PrivateKey = <ONYX_PRIVATE_KEY>
+ListenPort = 51820
+
+[Peer]
+PublicKey = <NEXUS_PUBLIC_KEY>
+AllowedIPs = <NEXUS_WG_ADDR>/32
+Endpoint = <NEXUS_HOST>:51820
+PersistentKeepalive = 25

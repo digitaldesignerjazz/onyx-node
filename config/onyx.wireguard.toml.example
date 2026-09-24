@@ -1,5 +1,9 @@
-# Onyx Node example config — safe to publish.
+# Onyx Node config with WireGuard as the recorded transport.
 # Copy to config/onyx.toml for local use. That file is gitignored.
+# Companion guide: docs/WIREGUARD_SETUP.md
+#
+# Do not put WireGuard PrivateKey material in this file.
+# Keys live in /etc/wireguard/ on the host, mode 0600.
 
 [node]
 id = "onyx-hannover-01"
@@ -13,9 +17,9 @@ state_dir = "state"
 [mesh]
 topic = "nexus/mesh/v0"
 # transport = "none" | "tailscale" | "netbird" | "yggdrasil" | "wireguard"
-transport = "none"
-# fingerprint is a public hint only. never an auth key.
-# fingerprint = "onyx-hannover-01.ts.net"
+transport = "wireguard"
+# fingerprint is a public hint only. never a private key.
+# fingerprint = "wg-nexus"
 
 [wizard_q]
 enabled = false

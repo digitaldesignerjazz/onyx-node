@@ -50,8 +50,12 @@ Until then `publish_pulse` records the envelope locally and returns mode `local`
 
 ## Transport fingerprint
 
-`--transport tailscale|netbird|yggdrasil|none` and optional `--fingerprint`
+`--transport tailscale|netbird|yggdrasil|wireguard|none` and optional `--fingerprint`
 write **only** to `state/runtime.json` (gitignored).
 
-Auth-shaped values (`tskey-`, `nbkey-`, long tokens) are refused.
-Record the public hint (node name or overlay address), never the key.
+`wireguard` is the private-tunnel alternative to Yggdrasil. Alias: `wg`.
+See [WIREGUARD_SETUP.md](WIREGUARD_SETUP.md) and [YGGDRASIL_SETUP.md](YGGDRASIL_SETUP.md).
+
+Auth-shaped values (`tskey-`, `nbkey-`, long tokens, anything containing
+`private`) are refused.
+Record the public hint (node name, interface, or overlay address), never the key.

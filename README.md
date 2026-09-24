@@ -7,7 +7,8 @@
 
 Onyx is a **stone node**: local identity first, optional transport second.
 It belongs to the independent mesh plane (`NEXUS_MESH=independent`).
-A live overlay fingerprint (Tailscale or NetBird) may be recorded locally.
+A live overlay fingerprint (Tailscale, NetBird, Yggdrasil, or WireGuard)
+may be recorded locally.
 Identity never waits on a vendor control plane.
 
 > Status: **seeded** · September 2026  
@@ -52,6 +53,13 @@ cargo run --bin onyx-node -- init --node-id onyx-hannover-01 \
   --transport tailscale --fingerprint onyx-hannover-01.ts.net
 ```
 
+WireGuard as a private tunnel instead of the public Yggdrasil mesh:
+
+```bash
+cargo run --bin onyx-node -- init --node-id onyx-hannover-01 \
+  --transport wireguard --fingerprint wg-nexus
+```
+
 First start writes gitignored files:
 
 - `state/identity.json`
@@ -60,6 +68,11 @@ First start writes gitignored files:
 - `status/last_mesh_envelope.json`
 
 Copy `config/onyx.example.toml` to `config/onyx.toml` for local overrides.
+
+Overlay guides (no secrets):
+
+- [Yggdrasil](docs/YGGDRASIL_SETUP.md) — public mesh peer
+- [WireGuard](docs/WIREGUARD_SETUP.md) — private tunnel alternative
 
 Hannover operator notes live in the **private** sister repo `onyx-hannover`.
 
