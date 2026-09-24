@@ -1,6 +1,10 @@
 //! Onyx Node — independent-mesh edge identity, pulse and publish hook.
 
 pub mod identity;
+#[cfg(feature = "listen")]
+pub mod listen;
+#[cfg(feature = "listen")]
+pub mod mesh_proto;
 pub mod publish;
 pub mod pulse;
 pub mod runtime;

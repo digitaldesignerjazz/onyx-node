@@ -11,7 +11,7 @@ A live overlay fingerprint (Tailscale, NetBird, Yggdrasil, or WireGuard)
 may be recorded locally.
 Identity never waits on a vendor control plane.
 
-> Status: **seeded** · September 2026  
+> Status: **alpha** (v0.2.0-alpha.1) · September 2026  
 > Spec: **Proposed** · not a live public chain  
 > License: [Apache-2.0](LICENSE)  
 > Operator: Esslinger & Co. · GitHub [`digitaldesignerjazz`](https://github.com/digitaldesignerjazz)
