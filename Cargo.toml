@@ -8,7 +8,10 @@ license = "Apache-2.0"
 repository = "https://github.com/digitaldesignerjazz/onyx-node"
 
 [features]
-default = []
+default = ["listen"]
+# Live `onyx-node listen` over nxmesh (libp2p gossipsub, Noise + QUIC/TCP).
+listen = ["dep:libp2p", "dep:futures"]
+# Legacy placeholder flag for publish.rs (one-shot pulse path).
 nxmesh = []
 
 [dependencies]
@@ -23,9 +26,13 @@ clap = { version = "4.5", features = ["derive"] }
 hex = "0.4"
 rand = "0.8"
 
-# Live gossip when the crate path exists:
-# nxmesh = { git = "https://github.com/digitaldesignerjazz/nexus", branch = "main" }
-# nxmesh = { path = "../nexus/mesh/noise-quic" }
+# nxmesh wire stack for `listen`. The nxmesh crate itself (nexus/mesh/noise-quic)
+# does not compile yet (node.rs:92 `?` on gossipsub::Behaviour::new's &str error),
+# so src/mesh_proto.rs carries a wire-compatible copy of MeshMessage.
+# Swap to: nxmesh = { git = "https://github.com/digitaldesignerjazz/nexus", branch = "main" }
+# once it builds. Keep libp2p on the same version as nxmesh.
+libp2p = { version = "0.54", optional = true, features = ["tokio", "noise", "tcp", "quic", "dns", "yamux", "gossipsub", "identify", "ping", "mdns", "macros"] }
+futures = { version = "0.3", optional = true }
 
 [lib]
 name = "onyx_node"

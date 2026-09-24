@@ -1,9 +1,10 @@
-//! Onyx Node CLI — init, pulse, status.
+//! Onyx Node CLI — init, pulse, status, listen.
 //!
 //! Usage:
 //!   cargo run --bin onyx-node -- init --node-id onyx-hannover-01
 //!   cargo run --bin onyx-node -- pulse --interval 30 --transport tailscale
 //!   cargo run --bin onyx-node -- status
+//!   cargo run --bin onyx-node -- listen --topic nexus/mesh/v0 --interval 30
 
 use anyhow::{bail, Result};
 use clap::{Parser, Subcommand};
@@ -55,6 +56,45 @@ enum Command {
         status_dir: PathBuf,
         #[arg(long, default_value = "nexus/mesh/v0")]
         topic: String,
+        #[arg(long, default_value = "none")]
+        transport: String,
+        #[arg(long)]
+        fingerprint: Option<String>,
+    },
+    /// Join the nxmesh topic, record incoming pulses to <status>/peers/ and
+    /// send a counter-pulse every interval.
+    #[cfg(feature = "listen")]
+    Listen {
+        #[arg(long, default_value = "onyx-node-001")]
+        node_id: String,
+        #[arg(long, default_value = "nexus/mesh/v0")]
+        topic: String,
+        #[arg(long, default_value_t = 30)]
+        interval: u64,
+        /// Comma-separated peer multiaddrs. Also read from config/peers.txt
+        /// and state/peers.txt (one per line) when present.
+        #[arg(long)]
+        peers: Option<String>,
+        /// Comma-separated bind multiaddrs.
+        #[arg(long, default_value = onyx_node::listen::DEFAULT_LISTEN_ADDRS)]
+        listen_addr: String,
+        #[arg(long, default_value = "status")]
+        status_dir: PathBuf,
+        #[arg(long, default_value = "state/identity.json")]
+        identity: PathBuf,
+        #[arg(long, default_value = "state/runtime.json")]
+        runtime: PathBuf,
+        /// libp2p Ed25519 key (created if missing, gitignored).
+        #[arg(long, default_value = "state/mesh.key")]
+        mesh_key: PathBuf,
+        /// Extra peer files to read (comma-separated).
+        #[arg(long, default_value = "config/peers.txt,state/peers.txt")]
+        peers_file: String,
+        #[arg(long)]
+        no_mdns: bool,
+        /// Label this node's pulses as a local loopback test peer.
+        #[arg(long)]
+        test_peer: bool,
         #[arg(long, default_value = "none")]
         transport: String,
         #[arg(long)]
@@ -167,6 +207,53 @@ async fn main() -> Result<()> {
                 println!("{}", pulse.to_pretty_json()?);
                 info!("pulse written {} publish={}", path.display(), report.mode);
             }
+        }
+        #[cfg(feature = "listen")]
+        Command::Listen {
+            node_id,
+            topic,
+            interval,
+            peers,
+            listen_addr,
+            status_dir,
+            identity,
+            runtime,
+            mesh_key,
+            peers_file,
+            no_mdns,
+            test_peer,
+            transport,
+            fingerprint,
+        } => {
+            use onyx_node::listen::{parse_peer_list, read_peer_file, ListenConfig};
+            let id = NodeIdentity::load_or_create(&identity, &node_id)?;
+            let rt = load_runtime(
+                &runtime,
+                &id.node_id,
+                id.independent_id.as_str(),
+                &transport,
+                fingerprint,
+            )?;
+            let mut all_peers = peers.map(|p| parse_peer_list(&p)).unwrap_or_default();
+            for f in parse_peer_list(&peers_file) {
+                let from_file = read_peer_file(std::path::Path::new(&f));
+                if !from_file.is_empty() {
+                    info!("{} peer(s) from {}", from_file.len(), f);
+                }
+                all_peers.extend(from_file);
+            }
+            all_peers.dedup();
+            let cfg = ListenConfig {
+                topic,
+                interval_secs: interval,
+                peers: all_peers,
+                listen_addrs: parse_peer_list(&listen_addr),
+                status_dir,
+                mesh_key,
+                enable_mdns: !no_mdns,
+                test_peer,
+            };
+            onyx_node::listen::run(cfg, id, rt).await?;
         }
         Command::Status {
             identity,

@@ -26,3 +26,12 @@ runtime_state.md
 .DS_Store
 .idea/
 .vscode/
+
+# listen runtime output
+status/peers/
+status/*.log
+status/*.pid
+status-*/
+state-*/
+status/.watchdog.lock
+status/listen_state.json
