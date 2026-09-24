@@ -1,6 +1,6 @@
 [package]
 name = "onyx-node"
-version = "0.1.1"
+version = "0.2.0-alpha.1"
 edition = "2021"
 authors = ["Sven Normen Esslinger <Esslinger & Co.>"]
 description = "Onyx Node — durable independent-mesh edge node for the Nexus lineage"
@@ -33,6 +33,25 @@ rand = "0.8"
 # once it builds. Keep libp2p on the same version as nxmesh.
 libp2p = { version = "0.54", optional = true, features = ["tokio", "noise", "tcp", "quic", "dns", "yamux", "gossipsub", "identify", "ping", "mdns", "macros"] }
 futures = { version = "0.3", optional = true }
+
+[package.metadata.deb]
+maintainer = "digitaldesignerjazz <135103659+digitaldesignerjazz@users.noreply.github.com>"
+copyright = "2026, Sven Normen Esslinger / Esslinger & Co."
+license-file = ["LICENSE", "0"]
+section = "net"
+priority = "optional"
+extended-description = """\
+Onyx Node: durable independent-mesh edge node for the Nexus lineage.
+Alpha: 'onyx-node listen' joins the nxmesh gossipsub topic nexus/mesh/v0,
+records incoming pulses and sends counter-pulses."""
+assets = [
+  ["target/release/onyx-node", "usr/bin/onyx-node", "755"],
+  ["README.md", "usr/share/doc/onyx-node/README.md", "644"],
+  ["CHANGELOG.md", "usr/share/doc/onyx-node/CHANGELOG.md", "644"],
+  ["docs/LISTEN.md", "usr/share/doc/onyx-node/LISTEN.md", "644"],
+  ["scripts/start-listen.sh", "usr/share/doc/onyx-node/examples/start-listen.sh", "755"],
+  ["scripts/watchdog.sh", "usr/share/doc/onyx-node/examples/watchdog.sh", "755"],
+]
 
 [lib]
 name = "onyx_node"
