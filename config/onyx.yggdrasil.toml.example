@@ -1,0 +1,23 @@
+# Onyx Node config with Yggdrasil transport enabled.
+# Copy to config/onyx.toml for local use. That file is gitignored.
+# Companion guide: docs/YGGDRASIL_SETUP.md
+
+[node]
+id = "onyx-hannover-01"
+plane = "independent"
+
+[pulse]
+interval_secs = 30
+status_dir = "status"
+state_dir = "state"
+
+[mesh]
+topic = "nexus/mesh/v0"
+# transport = "none" | "tailscale" | "netbird" | "yggdrasil"
+transport = "yggdrasil"
+# fingerprint is a public hint only. never an auth key.
+# fingerprint = "onyx-hannover-01.ygg"
+
+[wizard_q]
+enabled = false
+mode = "dry-run"
