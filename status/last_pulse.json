@@ -3,13 +3,13 @@
   "node_id": "onyx-seed",
   "independent_id": "independent:00000000000000000000000000000000",
   "status": "alive",
-  "ts": "2026-09-25T11:02:27Z",
+  "ts": "2026-09-25T16:25:21Z",
   "extra": {
     "prototype": "Onyx Node",
     "plane": "independent",
     "topic": "nexus/mesh/v0",
     "transport": "none",
     "repo": "digitaldesignerjazz/onyx-node",
-    "run_id": "36127211417"
+    "run_id": "36160638179"
   }
 }
