@@ -6,12 +6,21 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 mkdir -p status
+# 0) Ygg-Route-Waechter sicherstellen (idempotent, eigenes Pidfile).
+#    Steht vor flock: der Listener erbt fd 9 und haelt den Lock, solange er lebt.
+GUARD=/workspace/scripts/ygg-route-guard.sh
+GPID=/workspace/lumina-state/ygg-route-guard.pid
+if [[ -x $GUARD ]] && ! { [[ -s $GPID ]] && kill -0 "$(cat "$GPID")" 2>/dev/null; }; then
+  setsid nohup "$GUARD" >/dev/null 2>&1 < /dev/null &
+  echo "$(date '+%Y-%m-%dT%H:%M:%S%z') ygg-route-guard gestartet" >> status/watchdog.log
+fi
 exec 9>status/.watchdog.lock
 flock -n 9 || exit 0
 
 PIDFILE=status/onyx-listen.pid
 LOG=status/watchdog.log
 ts() { date '+%Y-%m-%dT%H:%M:%S%z'; }
+
 
 is_main_listener() {  # $1 = pid; matches argv exactly, not substrings of shells
   local -a argv
