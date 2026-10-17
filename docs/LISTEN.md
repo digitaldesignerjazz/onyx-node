@@ -27,6 +27,19 @@ Ops: `scripts/start-listen.sh`, `scripts/watchdog.sh` (idempotent restart, logs 
 
 Needs rustc >= 1.88 for current libp2p deps (rustup stable).
 
+## Supervisor key integrity (before every pulse)
+
+Before emitting a pulse, the listen-loop must verify the ML-KEM-1024 supervisor
+public key fingerprint against the committed reference:
+
+```bash
+./scripts/verify_supervisor_key.sh || { echo "[listen] supervisor key mismatch — pulse aborted"; exit 1; }
+```
+
+- Reference fingerprint: `0D9FE10BE523064E` (see `keys/supervisor_kyber1024_metadata.json`).
+- On mismatch the pulse is aborted and the operator is alerted — possible key swap.
+- Full behavior: `docs/KEY_INTEGRITY.md`. The private 64-byte seed never lives on the node.
+
 ## Hannover listener (Yggdrasil)
 
 The Hannover box binds the listener on its Yggdrasil address as well as IPv4 by putting
@@ -63,11 +76,11 @@ sudo yggdrasilctl getSelf && sudo yggdrasilctl getPeers
 sudo apt-get update && sudo apt-get install -y dirmngr gnupg curl git netcat-openbsd build-essential pkg-config
 sudo mkdir -p /usr/local/apt-keys
 gpg --fetch-keys https://neilalexander.s3.dualstack.eu-west-2.amazonaws.com/deb/key.txt
-gpg --export 1C5162E133015D81A811239D1840CDAC6011C5EA | sudo tee /usr/local/apt-keys/yggdrasil-keyring.gpg > /dev/null
+gpg --export 1C5162E133015D81811239D1840CDAC6011C5EA | sudo tee /usr/local/apt-keys/yggdrasil-keyring.gpg > /dev/null
 echo 'deb [signed-by=/usr/local/apt-keys/yggdrasil-keyring.gpg] http://neilalexander.s3.dualstack.eu-west-2.amazonaws.com/deb/ debian yggdrasil' | sudo tee /etc/apt/sources.list.d/yggdrasil.list
 sudo apt-get update && sudo apt-get install -y yggdrasil
 # the package writes /etc/yggdrasil.conf; the peer helper expects /etc/yggdrasil/yggdrasil.conf
-[ -f /etc/yggdrasil/yggdrasil.conf ] || { sudo mkdir -p /etc/yggdrasil && sudo ln -sf /etc/yggdrasil.conf /etc/yggdrasil/yggdrasil.conf; }
+[ -f /etc/yggdrasil/yggdrasil.conf ] || { sudo mkdir -p /etc/yggdrasil && ln -sf /etc/yggdrasil.conf /etc/yggdrasil/yggdrasil.conf; }
 
 # 2) Fresh checkout of the listen branch, so an existing ~/onyx-node identity stays untouched
 git clone -b feat/listen https://github.com/digitaldesignerjazz/onyx-node.git ~/onyx-listen
