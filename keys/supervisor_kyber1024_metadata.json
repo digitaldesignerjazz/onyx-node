@@ -1,0 +1,14 @@
+{
+  "algorithm": "ML-KEM-1024",
+  "nist_standard": "FIPS 203",
+  "security_level": 5,
+  "generated_at": "2026-10-16T21:49:12Z",
+  "fingerprint": "0D9FE10BE523064E",
+  "public_key_b64": "ImZe/FXRkz7QD2X97Lytqq7bxumyWc3MhVq0ThSSCo4=",
+  "public_key_hex": "22665EFC55D1933ED00F65FDECBCADAAAEDBC6E9B259CDCC855AB44E14920A8E",
+  "public_key_bytes": 32,
+  "private_seed_bytes": 64,
+  "private_seed_location": "supervisor_kyber1024_private.seed.hex (NOT in repo)",
+  "purpose": "Nexus supervisor authentication",
+  "distribution": "public key only; safe to share with supervisor nodes and identity attests"
+}

@@ -1,0 +1,15 @@
+ML-KEM-1024 supervisor public key (NIST FIPS 203, security level 5).
+Generated: 2026-10-16T21:49:12Z
+Fingerprint: 0D9FE10BE523064E
+
+PUBLIC KEY (Base64):
+ImZe/FXRkz7QD2X97Lytqq7bxumyWc3MhVq0ThSSCo4=
+
+PUBLIC KEY (hex):
+22665EFC55D1933ED00F65FDECBCADAAAEDBC6E9B259CDCC855AB44E14920A8E
+
+Notes:
+- This is the PUBLIC key only. The 64-byte private seed must never be committed.
+- Private seed file: supervisor_kyber1024_private.seed.hex (air-gapped / encrypted storage only).
+- Distribution: public key may be shared with supervisor nodes and Wizard-Q identity attests.
+- Verification: compare SHA3-256(pub_material) truncated to 16 hex chars == 0D9FE10BE523064E.
