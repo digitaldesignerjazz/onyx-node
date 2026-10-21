@@ -1,9 +1,27 @@
 {
-  "type": "AgentHeartbeat",
   "payload": {
     "agent": "onyx-node",
-    "node_id": "onyx-seed",
+    "extra": {
+      "capabilities": [
+        "identity",
+        "pulse",
+        "mesh-heartbeat"
+      ],
+      "github": "https://github.com/digitaldesignerjazz/onyx-node",
+      "kind": "counter-pulse",
+      "mesh_substrate": "nxmesh",
+      "mesh_transport": "nxmesh gossipsub (tcp+noise+yamux, quic-v1)",
+      "peer_id": "12D3KooWCTqU9empQ6MayAMAgiPt9pdMb36Pv1pnqE8BduuJTwdC",
+      "plane": "independent",
+      "prototype": "Onyx Node",
+      "round": 2880,
+      "topic": "nexus/mesh/v0",
+      "transport": "none",
+      "version": "0.2.0-alpha.1"
+    },
+    "node_id": "onyx-hannover-01",
     "status": "alive",
-    "ts": "2026-09-24T16:25:22Z"
-  }
+    "ts": "2026-10-21T00:10:36.774305272Z"
+  },
+  "type": "AgentHeartbeat"
 }
