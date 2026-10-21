@@ -2,8 +2,8 @@
   "type": "AgentHeartbeat",
   "payload": {
     "agent": "onyx-node",
-    "node_id": "onyx-seed",
+    "node_id": "onyx-hannover-01",
     "status": "alive",
-    "ts": "2026-10-21T00:08:07Z"
+    "ts": "2026-10-21T00:14:06.774482380Z"
   }
 }

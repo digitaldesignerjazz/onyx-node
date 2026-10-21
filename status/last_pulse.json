@@ -1,16 +1,25 @@
 {
   "agent": "onyx-node",
-  "node_id": "onyx-seed",
-  "independent_id": "independent:00000000000000000000000000000000",
+  "node_id": "onyx-hannover-01",
+  "independent_id": "independent:af0a5e939e83f7f9d52f006d6151cdf7",
   "status": "alive",
-  "ts": "2026-10-21T00:08:07Z",
+  "ts": "2026-10-21T00:14:06.774482380Z",
   "extra": {
-    "prototype": "Onyx Node",
+    "capabilities": [
+      "identity",
+      "pulse",
+      "mesh-heartbeat"
+    ],
+    "github": "https://github.com/digitaldesignerjazz/onyx-node",
+    "kind": "counter-pulse",
+    "mesh_substrate": "nxmesh",
+    "mesh_transport": "nxmesh gossipsub (tcp+noise+yamux, quic-v1)",
+    "peer_id": "12D3KooWCTqU9empQ6MayAMAgiPt9pdMb36Pv1pnqE8BduuJTwdC",
     "plane": "independent",
+    "prototype": "Onyx Node",
+    "round": 2887,
     "topic": "nexus/mesh/v0",
     "transport": "none",
-    "repo": "digitaldesignerjazz/onyx-node",
-    "run_id": "39519435493",
-    "note": "seed fallback (no fresh real pulse)"
+    "version": "0.2.0-alpha.1"
   }
 }
