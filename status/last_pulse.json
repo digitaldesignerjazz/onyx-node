@@ -3,7 +3,7 @@
   "node_id": "onyx-hannover-01",
   "independent_id": "independent:af0a5e939e83f7f9d52f006d6151cdf7",
   "status": "alive",
-  "ts": "2026-10-21T00:13:06.773950275Z",
+  "ts": "2026-10-21T00:14:06.774482380Z",
   "extra": {
     "capabilities": [
       "identity",
@@ -17,7 +17,7 @@
     "peer_id": "12D3KooWCTqU9empQ6MayAMAgiPt9pdMb36Pv1pnqE8BduuJTwdC",
     "plane": "independent",
     "prototype": "Onyx Node",
-    "round": 2885,
+    "round": 2887,
     "topic": "nexus/mesh/v0",
     "transport": "none",
     "version": "0.2.0-alpha.1"
