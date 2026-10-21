@@ -14,14 +14,14 @@
       "peer_id": "12D3KooWCTqU9empQ6MayAMAgiPt9pdMb36Pv1pnqE8BduuJTwdC",
       "plane": "independent",
       "prototype": "Onyx Node",
-      "round": 2880,
+      "round": 2883,
       "topic": "nexus/mesh/v0",
       "transport": "none",
       "version": "0.2.0-alpha.1"
     },
     "node_id": "onyx-hannover-01",
     "status": "alive",
-    "ts": "2026-10-21T00:10:36.774305272Z"
+    "ts": "2026-10-21T00:12:06.773800498Z"
   },
   "type": "AgentHeartbeat"
 }
